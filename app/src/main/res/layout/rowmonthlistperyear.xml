@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:background="@color/colorAccent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="2dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="6dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/monthsPerYearCardView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="visible">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/monthImageId"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/july2020"/>
+
+    <TextView
+        android:id="@+id/monthNameId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Month"
+        android:textSize="22dp"
+        android:textAlignment="center"
+        android:textColor="#FBEFEF"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/downloadMonthDevotionalId2"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        tools:src="@drawable/ic_file_download" />
+
+</RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

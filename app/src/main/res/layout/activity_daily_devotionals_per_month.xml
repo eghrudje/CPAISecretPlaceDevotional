@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DailyDevotionalsPerMonthActivity">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/monthImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/july2020">
+    </ImageView>
+    <TextView
+        android:id="@+id/monthTitleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Month"
+        android:textSize="25dp"
+        android:layout_marginTop="80dp"
+        android:textAlignment="center"
+        android:textColor="#FBEFEF"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/devotionalCardviewId"
+        android:max="100"
+        android:progress="50"
+        android:visibility="gone"
+        android:progressDrawable="@drawable/custom_progress"
+        android:background="#FFFF"
+        android:padding="20dp"/>
+    <!--        style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDailyDevotionalsPerMonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_margin="1dp" />
+
+</LinearLayout>

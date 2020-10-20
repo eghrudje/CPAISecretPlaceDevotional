@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">CPAISecretPlaceDevotional</string>
+    <string name="secretPlace">Secret Place</string>
+    <string name="welcome">Welcome!</string>
+    <string name="info">Please take a moment to configure your settings. You may access settings at any time from the main menu.</string>
+    <string name="alwaysOpen">Always Open \'Today\'</string>
+    <string name="downloadImages">Download Images</string>
+    <string name="bandwidth">Uses additional bandwidth and storage space</string>
+    <string name="dailyReminder">Daily Reminder</string>
+    <string name="remindMe">Remind me for devotion at: </string>
+    <string name="selectTime">Select Time</string>
+    <string name="skip">Skip</string>
+    <string name="done">Done</string>
+    <string name="settings_title">Settings</string>
+    <string name="note">Note</string>
+    <string name="note_title">Title</string>
+    <string name="read">Read: </string>
+    <string name="bibleYear">Bible in a Year: </string>
+    <string name="Reconnect">Unable To Get Today\'s Devotional, please try again.</string>
+    <string name="Retry">Try Again</string>
+    <string name="prev_note">View Notes</string>
+    <string name="save_note">Save</string>
+    <string name="take_note">Speak To Take Note</string>
+    <string name="speech_error">Sorry your device does not support this attribute</string>
+
+</resources>

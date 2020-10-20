@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:contentPadding="2dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="6dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="visible"
+        android:id="@+id/devotionalCardviewId">
+
+        <ImageView
+            android:id="@+id/bibleImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/y2019" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="120dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="30dp"
+                    android:background="#33000000"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    tools:text="date"
+                    android:gravity="center"
+                    android:textColor="#000"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/today"
+                    android:text="TODAY"
+                    android:visibility="invisible"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/cardview_light_background"
+                    android:background="#FFEB3B"/>
+                <TextView
+                    android:id="@+id/titleDev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleDev"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="65dp"
+                    tools:text="Title"
+                    android:textStyle="bold"
+                    android:textColor="#FBEFEF"
+                    android:textSize="19dp" />
+
+                <TextView
+                    android:id="@+id/shortTextDev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleDev"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@id/date"
+                    tools:text="Text"
+                    android:textColor="#FBEFEF"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:id="@+id/monthCardviewId"
+        android:visibility="gone"
+        android:layout_below="@+id/devotionalCardviewId">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/monthDevotionalImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/y2019" />
+        <TextView
+            android:id="@+id/monthTitleId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Month"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:textColor="#FBEFEF"
+            android:layout_marginTop="40dp"
+            android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/downloadMonthDevotionalId"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_file_download" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:visibility="gone"
+        android:id="@+id/yearCardviewId"
+        android:layout_below="@+id/monthCardviewId">
+
+        <ImageView
+            android:id="@+id/yearDevotionalImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/y2020" />
+        <TextView
+            android:id="@+id/yearTitleId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Year"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:textColor="#FBEFEF"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp" />
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

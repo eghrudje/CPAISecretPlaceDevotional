@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/linearLayoutId"
+    android:background="#EE0014"
+    android:padding="15dp">
+
+        <TextView
+            android:id="@+id/dateId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:textSize="12sp"
+            android:textColor="#030304"
+            android:paddingRight="20dp"
+            android:layout_weight="1"
+            android:textAlignment="textStart"/>
+
+        <TextView
+            android:id="@+id/devotionalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_toRightOf="@+id/dateId"
+            android:text="Title"
+            android:textSize="16sp"
+            android:textColor="#030304" />
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CPAIdevotional</string>
+    <string name="secretPlace">Endroit secret</string>
+    <string name="welcome">bienvenu!</string>
+    <string name="info">Veuillez prendre un moment pour configurer vos paramètres. Vous pouvez accéder aux paramètres à tout moment à partir du menu principal.</string>
+    <string name="alwaysOpen">Toujours ouvert \'Aujourd\'hui \'</string>
+    <string name="downloadImages">Télécharger des images</string>
+    <string name="bandwidth">Utilise une bande passante et un espace de stockage supplémentaires</string>
+    <string name="dailyReminder">Rappel quotidien</string>
+    <string name="remindMe">Rappelle-moi mon dévouement à:</string>
+    <string name="selectTime">Sélectionnez l\'heure</string>
+    <string name="skip">Sauter</string>
+    <string name="done">Terminé</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="read">Lis: </string>
+    <string name="bibleYear">Bible en un an: </string>
+    <string name="Reconnect">Unable To Get Today\'s Devotional, please try again.</string>
+    <string name="Retry">Try Again</string>
+    <string name="note_title">Title</string>
+    <string name="note">Note</string>
+    <string name="prev_note">View Notes</string>
+    <string name="save_note">Save</string>
+    <string name="take_note">Speak To Take Note</string>
+    <string name="speech_error">Sorry your device does not support this attribute</string>
+</resources>
