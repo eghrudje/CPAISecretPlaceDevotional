@@ -17,13 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DevotionalOnBoardingActivity"
+        <activity android:name="ui.DevotionalOnBoardingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".ListOfDevotionalNotesActivity"
+        <activity android:name="ui.ListOfDevotionalNotesActivity"
             android:parentActivityName="ui.MainActivity"/>
         <activity
-            android:name=".MonthDevotionalsPerYearActivity"
+            android:name="ui.MonthDevotionalsPerYearActivity"
             android:parentActivityName="ui.MainActivity" />
         <activity android:name=".DailyDevotionalsPerMonthActivity" />
         <activity
@@ -36,7 +36,7 @@
             android:name="ui.DevotionalActivity"
             android:parentActivityName="ui.MainActivity" />
         <activity
-            android:name=".DevotionalSplashScreen"
+            android:name="ui.DevotionalSplashScreen"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

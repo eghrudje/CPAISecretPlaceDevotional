@@ -1,5 +1,6 @@
 package ui;
 
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import com.example.cpaisecretplacedevotional.R;
 import service.ItemClickListener;
 
 public class DevotionalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private long mLastClickTime;
+    private static final long CLICK_TIME_INTERVAL =300;
     public ImageView imageView, monthImageView, yearImageView, downloadMonthDevotionalImageButton;
     public TextView date, text, title, todayText, monthTitle, yearTitle;
     public ItemClickListener itemClickListener;
@@ -41,6 +44,11 @@ public class DevotionalHolder extends RecyclerView.ViewHolder implements View.On
 
     @Override
     public void onClick(View v) {
+        if(SystemClock.elapsedRealtime() - mLastClickTime < 1000 ) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+
         this.itemClickListener.onItemClickListener(v, getLayoutPosition());
     }
     public void setItemClickListener(ItemClickListener ic){

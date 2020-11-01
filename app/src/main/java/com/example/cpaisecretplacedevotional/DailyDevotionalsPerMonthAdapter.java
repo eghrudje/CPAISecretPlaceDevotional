@@ -32,7 +32,7 @@ public class DailyDevotionalsPerMonthAdapter extends RecyclerView.Adapter<DailyD
     @NonNull
     @Override
     public DailyDevotionalsPerMonthHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowdaylistpermonth, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowdaylistpermonth, parent, false);
         return new DailyDevotionalsPerMonthHolder(view);
     }
 

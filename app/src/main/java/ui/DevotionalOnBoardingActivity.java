@@ -1,4 +1,4 @@
-package com.example.cpaisecretplacedevotional;
+package ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -7,26 +7,28 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
+import com.example.cpaisecretplacedevotional.DevotionalOnboardingModel;
+import com.example.cpaisecretplacedevotional.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ui.MainActivity;
+import ui.OnBoardingViewPageAdapter;
 
 public class DevotionalOnBoardingActivity extends AppCompatActivity {
     private static final String TAG = "Onboarding Activity";
     OnBoardingViewPageAdapter onBoardingViewPageAdapter;
     LinearLayout layoutOnBoardingIndicators;
     ImageButton onBoardingActionButton;
-// No response to click.... Ok
+    ImageButton onBoardingPrevButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
 
         layoutOnBoardingIndicators = findViewById(R.id.onBoardingIndicatorsId);
         onBoardingActionButton = findViewById(R.id.btnNextId);
+        onBoardingPrevButton = findViewById(R.id.btnPrev);
 
         setUpOnBoardingItems();
 
@@ -42,13 +45,22 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
 
         setUpOnBoardingIndicators();
 
-
         setCurrentOnBoardingIndicator(0);
+        Log.i(TAG, "onCreate: " + onBoardingViewPager.getCurrentItem());
+        Log.i(TAG, "onCreate: " + onBoardingViewPageAdapter.getItemCount());
+
+
         onBoardingViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 setCurrentOnBoardingIndicator(position);
+
+                if (onBoardingViewPager.getCurrentItem() > 0) {
+                    onBoardingPrevButton.setVisibility(View.VISIBLE);
+                } else {
+                    onBoardingPrevButton.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -68,12 +80,14 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
                 }
             }
         });
-//        onBoardingActionButton.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return false;
-//            }
-//        });
+
+        onBoardingPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem()-1);
+            }
+        });
+
     }
 
     private void setUpOnBoardingItems () {

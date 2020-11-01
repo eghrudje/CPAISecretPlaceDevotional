@@ -68,7 +68,7 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_devotional_settings);
 
 
-        spinner = findViewById(R.id.languageSpinner);
+        //spinner = findViewById(R.id.languageSpinner);
         devotionalSettingsDone = findViewById(R.id.done);
         devotionalSettingsSkip = findViewById(R.id.skip);
 
@@ -178,7 +178,6 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
         });
         getSupportActionBar().setTitle(getResources().getString(R.string.settings_title));
         //getSupportActionBar().
-
 
         ArrayAdapter<String> dataAdapter;
         dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, languages);

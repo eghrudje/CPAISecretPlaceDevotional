@@ -1,4 +1,4 @@
-package com.example.cpaisecretplacedevotional;
+package ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,8 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import ui.MainActivity;
 
 public class DevotionalSplashScreen extends AppCompatActivity {
     @Override
@@ -22,11 +20,17 @@ public class DevotionalSplashScreen extends AppCompatActivity {
 
             Intent intent = new Intent(this, DevotionalOnBoardingActivity.class);
             startActivity(intent);
+            finish();
+
         } else {
+
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
+
+
 }

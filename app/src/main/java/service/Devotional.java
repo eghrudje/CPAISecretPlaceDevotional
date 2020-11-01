@@ -3,22 +3,11 @@ package service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.ContactsContract;
-import android.util.Log;
-
-import com.example.cpaisecretplacedevotional.DevotionalNote;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.PrivateKey;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Comparator;
 
-import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

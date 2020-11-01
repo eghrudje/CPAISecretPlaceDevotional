@@ -1,4 +1,4 @@
-package com.example.cpaisecretplacedevotional;
+package ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.cpaisecretplacedevotional.MonthsDevotionalInAYearAdapter;
+import com.example.cpaisecretplacedevotional.R;
 
 import java.util.ArrayList;
 

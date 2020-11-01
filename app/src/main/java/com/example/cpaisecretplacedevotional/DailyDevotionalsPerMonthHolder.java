@@ -13,6 +13,8 @@ import service.ItemClickListener;
 
 public class DailyDevotionalsPerMonthHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     private static final String TAG = "DailyHolder";
+    private long mLastClickTime = System.currentTimeMillis();
+    private static final long CLICK_TIME_INTERVAL =300;
     TextView devotionalDate, devotionalTitle;
     RelativeLayout listOfDaysInMonthLayout;
     ItemClickListener itemClickListener;
@@ -31,6 +33,11 @@ public class DailyDevotionalsPerMonthHolder extends RecyclerView.ViewHolder impl
 
     @Override
     public void onClick(View v) {
+        long now = System.currentTimeMillis();
+        if(now - mLastClickTime < CLICK_TIME_INTERVAL) {
+            return;
+        }
+        mLastClickTime = now;
         this.itemClickListener.onItemClickListener(v, getLayoutPosition());
     }
     public void setItemClickListener(ItemClickListener ic){

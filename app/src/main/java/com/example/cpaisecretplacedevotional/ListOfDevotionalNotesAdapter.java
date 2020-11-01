@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+
+import service.DevotionalNote;
 import service.ItemClickListener;
 import ui.DevotionalNoteActivity;
 

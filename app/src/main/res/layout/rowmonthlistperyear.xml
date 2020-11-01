@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:visibility="visible">
-<RelativeLayout
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -45,7 +45,7 @@
         android:layout_gravity="end"
         android:layout_alignParentEnd="true"
         android:visibility="gone"
-        tools:src="@drawable/ic_file_download" />
+        android:src="@drawable/ic_file_download" />
 
 </RelativeLayout>
 

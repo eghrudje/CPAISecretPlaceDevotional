@@ -4,8 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context="ui.MainActivity">
+
+<!--    <Button-->
+<!--        android:id="@+id/printDatabaseDevotionalsID"-->
+<!--        android:text="Show database"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content" />-->
+<!--    <Button-->
+<!--        android:id="@+id/searchDatabaseForDevotionalID"-->
+<!--        android:text="Give me devotional"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
 
     <!--    <androidx.appcompat.widget.Toolbar-->
     <!--        android:id="@+id/toolbar"-->
@@ -21,18 +33,40 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:max="100"
-        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/colorAccent"
+        android:indeterminate="true"
         android:indeterminateTint="#1a09d6"
-        android:layout_marginTop="20dp"/>
+        android:max="100"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/Reconnect"
+        android:textAlignment="center"
+        android:textColor="#101010"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/buttonRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/Retry"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:layout_margin="1dp" />
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
+        android:visibility="gone" />
 
 </LinearLayout>

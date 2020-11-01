@@ -6,7 +6,7 @@
         android:title="Share"
         android:icon="@drawable/ic_share_black"
         android:id="@+id/share"
-        app:showAsAction="never"/>
+        app:showAsAction="withText"/>
     <item
         android:title="Settings"
         app:showAsAction="always"
@@ -16,12 +16,17 @@
     <item
         android:title="Exit"
         android:icon="@drawable/ic_exit"
-        app:showAsAction="never"
+        app:showAsAction="withText"
         android:id="@+id/exit"/>
     <item
         android:title="View Notes"
         android:icon="@drawable/ic_view_list"
         app:showAsAction="always"
         android:id="@+id/viewNotesID"/>
+    <item
+        android:id="@+id/aboutID"
+        android:title="About"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="withText"/>
 
 </menu>

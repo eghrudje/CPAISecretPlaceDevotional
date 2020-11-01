@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cpaisecretplacedevotional.DevotionalNote;
-import com.example.cpaisecretplacedevotional.ListOfDevotionalNotesActivity;
+import service.DevotionalNote;
+
 import com.example.cpaisecretplacedevotional.R;
 
 import java.text.SimpleDateFormat;
@@ -97,6 +97,11 @@ public class DevotionalNoteActivity extends AppCompatActivity {
                     createdTime = dateFormat2.format(cal.getTime());
                     devotionalNote.setNoteCreatedAtTime(createdTime);
                     devotionalNote.setNoteUpdatedAtTime("");
+
+                    updatedDate = createdDate;
+                    devotionalNote.setNoteUpdatedAtDate(updatedDate);
+                    updatedTime = createdTime;
+                    devotionalNote.setNoteUpdatedAtTime(updatedTime);
 
                     Log.i(TAG, "onClick(Create): " + devotionalNote.toString());
                     devotionalRealmHelper.saveDevotionalNote(devotionalNote);

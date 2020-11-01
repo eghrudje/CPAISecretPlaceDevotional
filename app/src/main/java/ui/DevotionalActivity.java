@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class DevotionalActivity extends AppCompatActivity {
 
     DevotionalRealmHelper devotionalRealmHelper;
     DevotionalBroadcastReceiver devotionalBroadcastReceiver;
+    private long mLastClickTime;
 
 
     public static final String TAG = "DevotionalActivity";
@@ -49,8 +51,6 @@ public class DevotionalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devotional);
 
-
-        ActionBar actionBar = getSupportActionBar();
         devotionalRealmHelper = DevotionalRealmHelper.getInstance(context);
         devotionalBroadcastReceiver = new DevotionalBroadcastReceiver();
         devotionalBroadcastReceiver.cancelAlarmAndNotification();
@@ -67,8 +67,8 @@ public class DevotionalActivity extends AppCompatActivity {
         devotionalImage = findViewById(R.id.devImage);
         devotionalErrorMessage = findViewById(R.id.errorMessage);
         devotionalButtonRetry = findViewById(R.id.buttonRetry);
-        buttonMoveLeft = findViewById(R.id.iconLeft);
-        buttonMoveRight = findViewById(R.id.iconRight);
+        //buttonMoveLeft = findViewById(R.id.iconLeft);
+        //buttonMoveRight = findViewById(R.id.iconRight);
         tagBibleInYear = findViewById(R.id.read);
         tagRead = findViewById(R.id.inAYear);
 
@@ -160,6 +160,8 @@ public class DevotionalActivity extends AppCompatActivity {
                 tagBibleInYear.setVisibility(View.INVISIBLE);
             }
         }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(title);
     }
 
     @Override
@@ -171,6 +173,11 @@ public class DevotionalActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000 ) {
+            return true;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+
         if(id == R.id.takeNote){
             Intent devotionalNoteActivityIntent = new Intent(DevotionalActivity.this, DevotionalNoteActivity.class);
             devotionalNoteActivityIntent.putExtra("Title", title);

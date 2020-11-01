@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import service.ItemClickListener;
 
 public class ListOfDevotionalNotesHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private long mLastClickTime = System.currentTimeMillis();
+    private static final long CLICK_TIME_INTERVAL =300;
     LinearLayout devotionalNoteLinearLayout;
     ItemClickListener itemClickListener;
     TextView devotionalTitleTextView, devotionalCreatedTextView, devotionalUpdatedTextView;
@@ -31,6 +33,11 @@ public class ListOfDevotionalNotesHolder extends RecyclerView.ViewHolder impleme
 
     @Override
     public void onClick(View v) {
+        long now = System.currentTimeMillis();
+        if(now - mLastClickTime < CLICK_TIME_INTERVAL) {
+            return;
+        }
+        mLastClickTime = now;
         this.itemClickListener.onItemClickListener(v, getLayoutPosition());
     }
     public void setItemClickListener(ItemClickListener ic){

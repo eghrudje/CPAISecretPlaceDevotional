@@ -1,26 +1,17 @@
 package service;
 
-import android.app.admin.DevicePolicyManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
-
-import com.example.cpaisecretplacedevotional.DevotionalNote;
-import com.example.cpaisecretplacedevotional.R;
-import com.example.cpaisecretplacedevotional.YearDevotional;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmException;
 
@@ -128,7 +119,6 @@ public class DevotionalRealmHelper {
         };
         realm.addChangeListener(realmChangeListener);
     }
-
 
 
     public ArrayList<Object> fetchDummyListOfMonthDevotionals() throws ParseException {

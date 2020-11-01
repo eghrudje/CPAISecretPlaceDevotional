@@ -1,4 +1,4 @@
-package com.example.cpaisecretplacedevotional;
+package ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.cpaisecretplacedevotional.DevotionalOnboardingModel;
+import com.example.cpaisecretplacedevotional.R;
 
 import java.util.ArrayList;
 import java.util.List;
