@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
     Context context;
     DatabaseReference referenceDT;
     ArrayList<Devotional> devotionalsInAMonthFromServer;
+    TextView errorMessageTextView;
+    Button retryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         devotionalRealmHelper = DevotionalRealmHelper.getInstance(context);
         devotionalsInAMonthFromServer = new ArrayList<>();
+        retryButton = findViewById(R.id.buttonRetryID);
+        errorMessageTextView = findViewById(R.id.errorMessageID);
 
         listOfDailyDevotionalsRecyclerView = findViewById(R.id.recyclerViewDailyDevotionalsPerMonth);
 
@@ -58,7 +63,7 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
         loadingMonthDevotionalProgressBar = findViewById(R.id.progressBarID);
 
         Intent intent = getIntent();
-        String keyMonthIdentifier = intent.getStringExtra("MonthIdentity");
+        final String keyMonthIdentifier = intent.getStringExtra("MonthIdentity");
         String monthName = intent.getStringExtra("monthName");
         String monthPic = intent.getStringExtra("monthImage");
 
@@ -74,6 +79,8 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
         if (dailyDevotionalListPerMonth.isEmpty()) {
             loadingMonthDevotionalProgressBar.setVisibility(View.VISIBLE);
             listOfDailyDevotionalsRecyclerView.setVisibility(View.GONE);
+            retryButton.setVisibility(View.GONE);
+            errorMessageTextView.setVisibility(View.GONE);
 
             referenceDT = FirebaseDatabase.getInstance().getReference().child("devotionals");
 
@@ -92,18 +99,26 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
                         Log.i(TAG, "onDataChange(dataSnapshot1): " + dataSnapshot1);
 
                     }
+                    if (!dailyDevotionalListPerMonth.isEmpty()) {
+                        loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
+                        listOfDailyDevotionalsRecyclerView.setVisibility(View.VISIBLE);
 
-                    loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
-                    listOfDailyDevotionalsRecyclerView.setVisibility(View.VISIBLE);
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(DailyDevotionalsPerMonthActivity.this, DividerItemDecoration.VERTICAL);
+                        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(DailyDevotionalsPerMonthActivity.this, R.drawable.recyclerview_divider));
+                        listOfDailyDevotionalsRecyclerView.addItemDecoration(dividerItemDecoration);
 
-                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(DailyDevotionalsPerMonthActivity.this, DividerItemDecoration.VERTICAL);
-                    dividerItemDecoration.setDrawable(ContextCompat.getDrawable(DailyDevotionalsPerMonthActivity.this, R.drawable.recyclerview_divider));
-                    listOfDailyDevotionalsRecyclerView.addItemDecoration(dividerItemDecoration);
+                        Collections.sort(dailyDevotionalListPerMonth, Devotional.devotionalComparatorDate);
+                        listOfDailyDevotionalsRecyclerView.setLayoutManager(new LinearLayoutManager(DailyDevotionalsPerMonthActivity.this));
+                        dailyDevotionalsPerMonthAdapter = new DailyDevotionalsPerMonthAdapter(DailyDevotionalsPerMonthActivity.this, dailyDevotionalListPerMonth);
+                        listOfDailyDevotionalsRecyclerView.setAdapter(dailyDevotionalsPerMonthAdapter);
 
-                    Collections.sort(dailyDevotionalListPerMonth, Devotional.devotionalComparatorDate);
-                    listOfDailyDevotionalsRecyclerView.setLayoutManager(new LinearLayoutManager(DailyDevotionalsPerMonthActivity.this));
-                    dailyDevotionalsPerMonthAdapter = new DailyDevotionalsPerMonthAdapter(DailyDevotionalsPerMonthActivity.this, dailyDevotionalListPerMonth);
-                    listOfDailyDevotionalsRecyclerView.setAdapter(dailyDevotionalsPerMonthAdapter);
+                    }else{
+                        loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
+                        errorMessageTextView.setVisibility(View.VISIBLE);
+                        retryButton.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -130,5 +145,78 @@ public class DailyDevotionalsPerMonthActivity extends AppCompatActivity {
 //        if (dev.getMonthYearName() == keyMonthIdentifier){
 //            devotionalRealmHelper.fetchMonthDevotionalFromDatabase(keyMonthIdentifier);
 //        }
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingMonthDevotionalProgressBar.setVisibility(View.VISIBLE);
+
+                final ArrayList<Devotional> dailyDevotionalListPerMonth = devotionalRealmHelper.fetchListOfDevotionalsPerMonth(keyMonthIdentifier);
+                Log.i(TAG, "onCreate(keyMonthIdentifier): " + keyMonthIdentifier);
+                Log.i(TAG, "onCreate(DailyDevFromDatabase....List): " + dailyDevotionalListPerMonth);
+                if (dailyDevotionalListPerMonth.isEmpty()) {
+                    loadingMonthDevotionalProgressBar.setVisibility(View.VISIBLE);
+                    listOfDailyDevotionalsRecyclerView.setVisibility(View.GONE);
+                    retryButton.setVisibility(View.GONE);
+                    errorMessageTextView.setVisibility(View.GONE);
+
+                    referenceDT = FirebaseDatabase.getInstance().getReference().child("devotionals");
+
+                    DatabaseReference databaseReference = referenceDT.child(keyMonthIdentifier);
+
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                                Log.i(TAG, "onDataChange(dataSnapshot): " + dataSnapshot);
+                                Devotional devotionalForThisMonth = dataSnapshot1.getValue(Devotional.class);
+                                Log.i(TAG, "onDataChange(devotionalForThisMonth): " + devotionalForThisMonth);
+                                dailyDevotionalListPerMonth.add(devotionalForThisMonth);
+                                devotionalRealmHelper.savedDevotional(devotionalForThisMonth);
+
+                                Log.i(TAG, "onDataChange(dataSnapshot1): " + dataSnapshot1);
+
+                            }
+                            if (!dailyDevotionalListPerMonth.isEmpty()) {
+                                loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
+                                listOfDailyDevotionalsRecyclerView.setVisibility(View.VISIBLE);
+
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(DailyDevotionalsPerMonthActivity.this, DividerItemDecoration.VERTICAL);
+                                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(DailyDevotionalsPerMonthActivity.this, R.drawable.recyclerview_divider));
+                                listOfDailyDevotionalsRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                                Collections.sort(dailyDevotionalListPerMonth, Devotional.devotionalComparatorDate);
+                                listOfDailyDevotionalsRecyclerView.setLayoutManager(new LinearLayoutManager(DailyDevotionalsPerMonthActivity.this));
+                                dailyDevotionalsPerMonthAdapter = new DailyDevotionalsPerMonthAdapter(DailyDevotionalsPerMonthActivity.this, dailyDevotionalListPerMonth);
+                                listOfDailyDevotionalsRecyclerView.setAdapter(dailyDevotionalsPerMonthAdapter);
+
+                            }else{
+                                loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
+                                errorMessageTextView.setVisibility(View.VISIBLE);
+                                retryButton.setVisibility(View.VISIBLE);
+                            }
+
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    Log.i(TAG, "onCreate(DailyDevDatabase): " + dailyDevotionalListPerMonth);
+                } else {
+                    listOfDailyDevotionalsRecyclerView.setVisibility(View.VISIBLE);
+                    loadingMonthDevotionalProgressBar.setVisibility(View.GONE);
+
+                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(DailyDevotionalsPerMonthActivity.this, DividerItemDecoration.VERTICAL);
+                    dividerItemDecoration.setDrawable(ContextCompat.getDrawable(DailyDevotionalsPerMonthActivity.this, R.drawable.recyclerview_divider));
+                    listOfDailyDevotionalsRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                    Collections.sort(dailyDevotionalListPerMonth, Devotional.devotionalComparatorDate);
+                    listOfDailyDevotionalsRecyclerView.setLayoutManager(new LinearLayoutManager(DailyDevotionalsPerMonthActivity.this));
+                    dailyDevotionalsPerMonthAdapter = new DailyDevotionalsPerMonthAdapter(DailyDevotionalsPerMonthActivity.this, dailyDevotionalListPerMonth);
+                    listOfDailyDevotionalsRecyclerView.setAdapter(dailyDevotionalsPerMonthAdapter);
+                }
+            }
+        });
     }
 }

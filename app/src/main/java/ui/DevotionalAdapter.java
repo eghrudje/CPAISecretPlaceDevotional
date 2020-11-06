@@ -139,6 +139,17 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalHolder> {
 
             if(devotionalsPerMonth.isEmpty()) {
                 holder.downloadMonthDevotionalImageButton.setVisibility(View.VISIBLE);
+                holder.downloadMonthDevotionalImageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(c, DailyDevotionalsPerMonthActivity.class);
+                        intent.putExtra("MonthIdentity", monthId);
+                        intent.putExtra("monthImage", monthPic);
+                        intent.putExtra("monthName", monthName);
+                        c.startActivity(intent);
+                        holder.downloadMonthDevotionalImageButton.setVisibility(View.GONE);
+                    }
+                });
             } else {
                 holder.downloadMonthDevotionalImageButton.setVisibility(View.GONE);
             }
@@ -146,8 +157,6 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalHolder> {
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClickListener(View v, int position) {
-                    //holder.downloadMonthDevotionalImageButton.setVisibility(View.GONE);
-
                     Log.i(TAG, "onItemClickListener: Tapped MonthDevotional On MainActivity" );
 
                     Intent daysPerMonthActivityIntent = new Intent(c, DailyDevotionalsPerMonthActivity.class);
@@ -155,6 +164,8 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalHolder> {
                     daysPerMonthActivityIntent.putExtra("monthImage", monthPic);
                     daysPerMonthActivityIntent.putExtra("monthName", monthName);
                     c.startActivity(daysPerMonthActivityIntent);
+
+                    holder.downloadMonthDevotionalImageButton.setVisibility(View.GONE);
                 }
             });
 

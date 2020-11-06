@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IntroductoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/welcomeID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Welcome" />
+
+    <TextView
+        android:id="@+id/introTextID"
+        android:layout_below="@+id/welcomeID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:text="For effective utilization of this app we recommend that you
+enable the 'Do not disturb' feature. This will enhance focus and concentration during the course of your devotion.
+Click the button to enable feature" />
+
+    <Button
+        android:id="@+id/setUpID"
+        android:layout_below="@+id/introTextID"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="SetUp"
+        android:visibility="visible"
+        android:textColor="@color/blueBackground"
+        android:background="@color/white"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/proceedID"
+        android:layout_below="@+id/setUpID"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Proceed"
+        android:visibility="gone"
+        android:textColor="@color/blueBackground"
+        android:background="@color/white"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/imageOneID"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/proceedID"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:src="@drawable/do_not_disturb_mode_inactive"
+        />
+
+    <ImageView
+        android:id="@+id/imageTwoID"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/imageOneID"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:src="@drawable/do_not_disturb_mode_active"
+        />
+
+
+</RelativeLayout>

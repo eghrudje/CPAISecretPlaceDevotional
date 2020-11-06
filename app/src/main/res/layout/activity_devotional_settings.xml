@@ -79,17 +79,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/airPlaneModeText"
+                android:id="@+id/doNotDisturbText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
                 android:layout_weight="1"
-                android:text="Switch Airplane Mode"
+                android:text="Switch Do Not Disturb Mode"
                 android:textColor="#040009"
                 android:textSize="18sp" />
 
-            <ToggleButton
-                android:id="@+id/btnAirPlaneId"
+            <Button
+                android:id="@+id/btnDoNotDisturbId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"

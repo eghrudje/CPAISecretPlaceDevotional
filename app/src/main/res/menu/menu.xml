@@ -28,5 +28,10 @@
         android:title="About"
         android:icon="@drawable/ic_info"
         app:showAsAction="withText"/>
+    <item
+        android:id="@+id/feedBackId"
+        android:title="Feedback"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="withText"/>
 
 </menu>

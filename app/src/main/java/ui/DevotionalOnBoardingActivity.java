@@ -2,18 +2,28 @@ package ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cpaisecretplacedevotional.DevotionalOnboardingModel;
+import com.example.cpaisecretplacedevotional.IntroductoryFragment;
 import com.example.cpaisecretplacedevotional.R;
 
 import java.util.ArrayList;
@@ -28,15 +38,24 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
     LinearLayout layoutOnBoardingIndicators;
     ImageButton onBoardingActionButton;
     ImageButton onBoardingPrevButton;
+    FrameLayout fragmentFrameLayout;
+    public static FragmentManager fragmentManager;
+    Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devotional_on_boarding);
+        context = this;
 
         layoutOnBoardingIndicators = findViewById(R.id.onBoardingIndicatorsId);
         onBoardingActionButton = findViewById(R.id.btnNextId);
         onBoardingPrevButton = findViewById(R.id.btnPrev);
+        fragmentFrameLayout = findViewById(R.id.fragmentFrameLayoutID);
+
+
+        fragmentManager = getSupportFragmentManager();
 
         setUpOnBoardingItems();
 
@@ -67,16 +86,25 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
         onBoardingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onBoardingActionButton.bringToFront();
-                //This log is pprinted right?
                 Log.i(TAG, "onClick: " );
-                //Toast.makeText(DevotionalOnBoardingActivity.this, "Hello....", Toast.LENGTH_LONG).show();
                 if (onBoardingViewPager.getCurrentItem()+1 < onBoardingViewPageAdapter.getItemCount()) {
                     onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem()+1);
                 }else{
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    onBoardingViewPager.setVisibility(View.GONE);
+                    layoutOnBoardingIndicators.setVisibility(View.GONE);
+                    onBoardingActionButton.setVisibility(View.GONE);
+                    onBoardingPrevButton.setVisibility(View.GONE);
+                    fragmentFrameLayout.setVisibility(View.VISIBLE);
+
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    IntroductoryFragment introductoryFragment = new IntroductoryFragment();
+                    fragmentTransaction.add(R.id.fragmentFrameLayoutID, introductoryFragment, null);
+                    fragmentTransaction.commit();
+
+
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 }
             }
         });
@@ -89,6 +117,7 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void setUpOnBoardingItems () {
         List<DevotionalOnboardingModel> onBoardingItems = new ArrayList<>();

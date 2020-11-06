@@ -1,24 +1,33 @@
 package ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cpaisecretplacedevotional.BuildConfig;
 import com.example.cpaisecretplacedevotional.DevotionalDebug;
+import com.example.cpaisecretplacedevotional.DevotionalFeedbackModel;
 import com.example.cpaisecretplacedevotional.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements DevotionalInterfa
     String todaysDatePassed;
     TextView errorMessageTextView;
     Button retryButton, displayDbDevs, searchDbDev;
+    ImageButton monthDownloadImageButton;
     private long mLastClickTime;
+    FirebaseDatabase rootNode;
 
 
     @Override
@@ -68,14 +79,21 @@ public class MainActivity extends AppCompatActivity implements DevotionalInterfa
         progressBar = findViewById(R.id.progressbarId);
         errorMessageTextView = findViewById(R.id.errorMessage);
         retryButton = findViewById(R.id.buttonRetry);
-//        displayDbDevs = findViewById(R.id.printDatabaseDevotionalsID);
-//        searchDbDev = findViewById(R.id.searchDatabaseForDevotionalID);
+        monthDownloadImageButton = findViewById(R.id.downloadMonthDevotionalId);
 
-        //    devRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        NotificationManager notificationManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        if (notificationManager.isNotificationPolicyAccessGranted()) {
+            AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        } else {
+            Toast.makeText(this, "Go to settings to enable do not disturb feature", Toast.LENGTH_LONG).show();
+        }
+
+//        notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
+
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         devRecyclerView.setLayoutManager(llm);
-
 
         devotionalRealmHelper = DevotionalRealmHelper.getInstance(this);
         devotionalRealmHelper.attachDataChangeListener(this);
@@ -202,6 +220,42 @@ public class MainActivity extends AppCompatActivity implements DevotionalInterfa
         }
         if (id == R.id.exit) {
             finish();
+        }
+        if (id == R.id.feedBackId) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            View view = getLayoutInflater().inflate(R.layout.feedback_input_dialog, null);
+            dialog.setView(view);
+
+            final EditText nameEditText = view.findViewById(R.id.identificationID);
+            final EditText feedbackEditText = view.findViewById(R.id.feedbackTextID);
+            Button sendFeedbackButton = view.findViewById(R.id.sendFeedbackBtnId);
+
+            final AlertDialog alertDialog = dialog.show();
+
+            sendFeedbackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+
+                    rootNode = FirebaseDatabase.getInstance();
+                    reference = rootNode.getReference().child("feedbacks");
+
+                    String name = nameEditText.getText().toString();
+                    String feedback = feedbackEditText.getText().toString();
+                    long unixTime = System.currentTimeMillis()/1000L;
+
+                    Date date = new java.util.Date(unixTime*1000L);
+                    SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
+                    String formattedDateTime = sdf.format(date);
+
+                    DevotionalFeedbackModel devotionalFeedbackModel = new DevotionalFeedbackModel(name, feedback, formattedDateTime);
+                    DatabaseReference ref = reference.push();
+                    ref.setValue(devotionalFeedbackModel);
+                    Toast.makeText(MainActivity.this, "Feedback Sent", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
         }
         return true;
     }

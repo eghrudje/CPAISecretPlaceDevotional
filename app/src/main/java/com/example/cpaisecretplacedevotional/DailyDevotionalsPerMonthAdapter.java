@@ -28,7 +28,7 @@ public class DailyDevotionalsPerMonthAdapter extends RecyclerView.Adapter<DailyD
         this.arrayListOfDays = arrayListOfDays;
         Log.e(TAG, "DailyDevotionalsPerMonthAdapter: " + arrayListOfDays.toString());
     }
-//Open the devotionals page for september>? Again ok. Ok.
+
     @NonNull
     @Override
     public DailyDevotionalsPerMonthHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

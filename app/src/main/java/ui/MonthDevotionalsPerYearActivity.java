@@ -88,7 +88,7 @@ public class MonthDevotionalsPerYearActivity extends AppCompatActivity {
         MonthDevotional monthDevotional7 = new MonthDevotional();
         monthDevotional7.setMonthName("July");
         monthDevotional7.setMonthImage("july" + year);
-        monthDevotional6.setMonthDevotional_id("July" + year);
+        monthDevotional7.setMonthDevotional_id("July" + year);
         arrayListOfMonths.add(monthDevotional7);
 
         MonthDevotional monthDevotional8 = new MonthDevotional();

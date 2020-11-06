@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -60,20 +62,21 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
     String selectedLanguage = null;
     String selectedAlarmTime = null;
     Button devotionalSettingsDone, devotionalSettingsSkip;
-    ToggleButton airPlaneBtn;
+    Button doNotDisturbButton;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devotional_settings);
 
+        context = this;
 
         //spinner = findViewById(R.id.languageSpinner);
         devotionalSettingsDone = findViewById(R.id.done);
         devotionalSettingsSkip = findViewById(R.id.skip);
 
-        airPlaneBtn = findViewById(R.id.btnAirPlaneId);
-        initAirPlaneModeBtn();
+        doNotDisturbButton = findViewById(R.id.btnDoNotDisturbId);
 
         editText = findViewById(R.id.editTime);
         editText.setOnClickListener(new View.OnClickListener() {
@@ -117,9 +120,7 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-        //Seems to be working ok. The right code block is being ran. Hmm. Are you there? Yes. The buttons show once i enter the settings page.
-        // Oh. I was asking to check that the funtionality was working as it was before, I wanted to make sure we didn;t break anything. Ok.
-        //TeYou can test that.. I have to for for some minutes now.
+
         devotionalSettingsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,44 +178,72 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setTitle(getResources().getString(R.string.settings_title));
+
+
+
         //getSupportActionBar().
 
-        ArrayAdapter<String> dataAdapter;
-        dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, languages);
+//        ArrayAdapter<String> dataAdapter;
+//        dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, languages);
+//
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(dataAdapter);
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (parent.getItemAtPosition(position).equals("Select Language")) {
+//
+//                } else {
+//                    String language = parent.getItemAtPosition(position).toString();
+//                    if (language.equals("French")) {
+//                        selectedLanguage = "fr";
+//                        if (checkPreferenceSelectionChanged("language")){
+//                            devotionalSettingsDone.setVisibility(View.VISIBLE);
+//                            devotionalSettingsSkip.setVisibility(View.VISIBLE);
+//                        }
+//                    }else if (language.equals("English")) {
+//                        selectedLanguage = "en";
+//                        if (checkPreferenceSelectionChanged("language")){
+//                            devotionalSettingsDone.setVisibility(View.VISIBLE);
+//                            devotionalSettingsSkip.setVisibility(View.VISIBLE);
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+        settingsPageUpdate();
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        doNotDisturbButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals("Select Language")) {
-
+            public void onClick(View v) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(context.NOTIFICATION_SERVICE);
+                if (!notificationManager.isNotificationPolicyAccessGranted()) {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                    startActivityForResult(intent, DevotionalSettingsActivity.RESULT_OK);
                 } else {
-                    String language = parent.getItemAtPosition(position).toString();
-                    if (language.equals("French")) {
-                        selectedLanguage = "fr";
-                        if (checkPreferenceSelectionChanged("language")){
-                            devotionalSettingsDone.setVisibility(View.VISIBLE);
-                            devotionalSettingsSkip.setVisibility(View.VISIBLE);
-                        }
-                    }else if (language.equals("English")) {
-                        selectedLanguage = "en";
-                        if (checkPreferenceSelectionChanged("language")){
-                            devotionalSettingsDone.setVisibility(View.VISIBLE);
-                            devotionalSettingsSkip.setVisibility(View.VISIBLE);
-                        }
-
-                    }
+                    Toast.makeText(context, "Do not disturb feature already set", Toast.LENGTH_LONG).show();
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
-        settingsPageUpdate();
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.i(TAG, "onPostResume: Hello........");
+        NotificationManager notificationManager = (NotificationManager) getSystemService(context.NOTIFICATION_SERVICE);
+        if (notificationManager.isNotificationPolicyAccessGranted()) {
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        }
     }
 
     private void setLocale(String lang) {
@@ -239,7 +268,7 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         String fullLengthLanguage = convertLanguageToFullLength(dialet);
         int index = languages.indexOf(fullLengthLanguage);
-        spinner.setSelection(index);
+//        spinner.setSelection(index);
     }
 
     private String convertLanguageToFullLength(String shortForm) {
@@ -258,7 +287,7 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
 
     public void settingsPageUpdate() {
         updateAlarmText();
-        loadLocale();
+//        loadLocale();
     }
     private void setAlarm(long timeInMillis) {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -319,41 +348,4 @@ public class DevotionalSettingsActivity extends AppCompatActivity {
         return false;
     }
 
-    private void initAirPlaneModeBtn() {
-        airPlaneBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (Build.VERSION.SDK_INT < 17) {
-                    try {
-                        boolean isEnabled = Settings.System.getInt(
-                                getContentResolver(),
-                                Settings.System.AIRPLANE_MODE_ON, 0) == 1;
-                        Settings.System.putInt(
-                                getContentResolver(),
-                                Settings.System.AIRPLANE_MODE_ON, isEnabled ? 0 : 1);
-
-                        Intent intent = new Intent((Intent.ACTION_AIRPLANE_MODE_CHANGED));
-                        intent.putExtra("state", !isEnabled);
-                        sendBroadcast(intent);
-                    } catch (ActivityNotFoundException e) {
-                        Log.e(TAG, "onCheckedChanged: "+ e.getMessage());
-                    }
-                }else {
-                    try {
-                        Intent intent = new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }catch (ActivityNotFoundException e) {
-                        try {
-                            Intent intent = new Intent("android.settings.WIRELESS_SETTINGS");
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }catch (ActivityNotFoundException ex) {
-                            Toast.makeText(buttonView.getContext(), "bbbbbb", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }
-        });
-    }
 }

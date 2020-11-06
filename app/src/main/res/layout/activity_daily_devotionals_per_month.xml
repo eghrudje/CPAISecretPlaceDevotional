@@ -45,7 +45,26 @@
         android:padding="20dp"/>
     <!--        style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
 
+    <TextView
+        android:id="@+id/errorMessageID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Devotionals for this month not available"
+        android:textAlignment="center"
+        android:textColor="#101010"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
+    <Button
+        android:id="@+id/buttonRetryID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/Retry"
+        android:visibility="gone" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDailyDevotionalsPerMonth"
         android:layout_width="match_parent"
