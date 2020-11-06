@@ -102,9 +102,7 @@ public class DevotionalOnBoardingActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
 
 
-//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
+
                 }
             }
         });
